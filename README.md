@@ -44,15 +44,15 @@ Dependencies (see `requirements.txt`):
 git clone https://github.com/Jakaria6284/chat_with_pdf_langchain.git
 cd chat_with_pdf_langchain
 
-
+#make your virtual env by following code
 python -m venv venv
 source venv/bin/activate    # Linux/macOS
 venv\Scripts\activate       # Windows
 
-pip install -r requirements.txt
+pip install -r requirements.txt #run it. it install all necessary libary that require for our project
 
 
-GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE" #you can make api key from this website https://groq.com/
+GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE" #you can make api key from this website-> https://groq.com/
 
 
-python app.py  # paste in into your terminal that run the gradio interface after that you can test the system
+python app.py  # paste it into your terminal that run the gradio interface after that you can test the system
