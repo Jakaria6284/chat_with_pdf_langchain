@@ -52,7 +52,7 @@ Dependencies (see `requirements.txt`):
 
 ```bash
 git clone <repository_url>
-cd rag-pdf-gradio
+cd chat_with_pdf_langchain
 
 
 python -m venv venv
