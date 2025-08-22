@@ -6,9 +6,10 @@ from langchain.chains import ConversationalRetrievalChain
 from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
 from config import VECTOR_DIR, EMBED_MODEL, GROQ_API_KEY, GROQ_MODEL
 
-# ---- Memory ----
+# ---- Memory for our rag system----
 memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
 
+#we are going to reset memory if new pdf uplaod 
 def reset_memory():
     """Clear previous conversation memory (use after ingesting a new PDF)"""
     memory.clear()
@@ -16,7 +17,7 @@ def reset_memory():
 def normalize_question(question: str) -> str:
     """
     Ensure the question starts with 'What' if not already starting
-    with Who/When/Where/Why/How/What.
+    with Who/When/Where/Why/How/What/tell me about/summarize.
     """
     question = question.strip()
     if question == "":
@@ -35,10 +36,9 @@ def build_chain():
 
     llm = ChatGroq(model=GROQ_MODEL, api_key=GROQ_API_KEY, temperature=0.1)
 
-    # ---- System + Human Prompt with diverse few-shot examples ----
-    from langchain.prompts import ChatPromptTemplate, SystemMessagePromptTemplate, HumanMessagePromptTemplate
-
+    # ---- System + Human Prompt with diverse prompt engineering----
     chat_prompt = ChatPromptTemplate.from_messages([
+    #this is a system message
     SystemMessagePromptTemplate.from_template(
         "You are a highly knowledgeable financial expert assistant. "
         "Use the context provided to answer the user question accurately. "
@@ -46,6 +46,7 @@ def build_chain():
         "Cite the reference (page number or section title) from the PDF where the information was found. "
         "If the answer is not present in the context, say 'The information is not available in the provided document.'"
     ),
+    #this is a human message
     HumanMessagePromptTemplate.from_template(
         """Context:
 {context}
@@ -55,7 +56,7 @@ User Question:
 
 Instructions:
 - Answer the question clearly and concisely.
-- Always start the answer naturally (What, Who, When, Where, Why, How) depending on the question.
+- Always start the answer naturally (What, Who, When, Where, Why, How,tell me about ,summarize) depending on the question.
 - Include the reference where the information is found in the format: Reference: page:X or section name.
 - If the information is not in the context, state clearly that it is not available.
 
@@ -64,7 +65,7 @@ Answer:
     )
 ])
 
-
+# this fuction make our orginal chain 
     chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
         retriever=retriever,
@@ -72,6 +73,8 @@ Answer:
         combine_docs_chain_kwargs={"prompt": chat_prompt}
     )
     return chain
+
+# this method responsible for question answering 
 
 def answer(user_question: str) -> str:
     """
