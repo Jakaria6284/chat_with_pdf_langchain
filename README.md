@@ -18,7 +18,7 @@ A **local PDF chatbot** using **LangChain, FAISS, HuggingFace embeddings, Groq L
 - Ask questions and get **context-aware answers** from the PDF.
 - Answers include **references** (page numbers or section names).
 - Maintains **conversation memory**.
-- Clean **prompt engineering** for accurate responses (no few-shot examples needed).
+- Clean **prompt engineering** for accurate responses.
 
 ---
 
