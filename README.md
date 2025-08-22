@@ -22,16 +22,6 @@ A **local PDF chatbot** using **LangChain, FAISS, HuggingFace embeddings, Groq L
 
 ---
 
-## Project Structure
-
-rag-pdf-gradio/
-│── app.py 
-│── config.py 
-│── ingestion.py 
-│── rag.py 
-│── requirements.txt 
-│── data/ # Uploaded PDFs (created at runtime)
-│── vectorstore/ # FAISS vector index (created at runtime)
 
 
 ---
@@ -51,7 +41,7 @@ Dependencies (see `requirements.txt`):
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone <repository_url>
+git clone https://github.com/Jakaria6284/chat_with_pdf_langchain.git
 cd chat_with_pdf_langchain
 
 
@@ -62,7 +52,7 @@ venv\Scripts\activate       # Windows
 pip install -r requirements.txt
 
 
-GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE"
+GROQ_API_KEY = "YOUR_GROQ_API_KEY_HERE" #you can make api key from this website https://groq.com/
 
 
-python app.py
+python app.py  # paste in into your terminal that run the gradio interface after that you can test the system
